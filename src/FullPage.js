@@ -20,17 +20,15 @@ export default defineComponent({
   emit: constants.EVENTS.map(event => camelToKebab(event)),
   setup(props, { emit, slots }) {
     const fullPageRef = ref(null);
-    const events = reactive(
-      ...constants.EVENTS.reduce((eventsHandlers, event) => {
+    const events = constants.EVENTS.reduce((eventsHandlers, event) => {
         return {
           ...eventsHandlers,
 
-          [event]: (...args) => {
+          event: (...args) => {
             emitEvent(event, args)
           }
         }
       }, {})
-    );
     const api = ref(undefined);
 
     function emitEvent (name, args) {
